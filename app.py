@@ -6,9 +6,21 @@ import urllib.request as ur
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/mainMenu')
 def main():
+	return render_template('mainMenu.html')
+
+@app.route('/newGame')
+def newGame():
 	return render_template('index.html')
+
+@app.route('/highScores')
+def highScores():
+	return render_template('highScores.html')
+
+@app.route('/quitGame')
+def quitGame():
+	return render_template('highScores.html')
 '''
 def main():
 	question = get_random_question()

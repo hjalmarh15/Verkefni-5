@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jeopardy</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"
+        type="text/javascript"></script>
+</head>
+<body>
+	<h3>WELCOME TO JEOPARDY QUESTION GAME MANE</h3>
+	<button id="newGame">Create a New Game</button>
+	<button id="highScore">High Scores</button>
+	<button id="quitGame">Quit Game</button>
+	
+	<script>
+		$(function(){
+			$('#newGame').click(function(){
+				$.ajax({
+					url: '/newGame',
+					data: $('form').serialize(),
+					dataType: 'json',
+					type: 'GET'
+				});
+			})
+		});
+		$(function(){
+			$('#highScore').click(function(){
+				$.ajax({
+					url: '/highScore',
+					data: $('form').serialize(),
+					dataType: 'json',
+					type: 'Get'
+				});
+			})
+		});
+		$(function(){
+			$('#quitGame').click(function(){
+				$.ajax({
+					url: '/highScore'
+					data: $('form').serialize(),
+					dataType: 'json',
+					type: 'Get'
+				});
+			})
+		});
+	</script>
+</body>
+</html>
