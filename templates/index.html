@@ -4,27 +4,36 @@
 	<title>Jeopardy</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"
         type="text/javascript"></script>
+     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+
 </head>
 <body>
-	<p> This is verkefni 5 bro!</p>
-	<button id='btn'>Get Random Question</button>
+	 <div class="jumbotron">
+        <h1>Verkefni 5</h1>
+         <div id='answerBox'></div>
+        <button id="randomBtn" class="btn btn-lg btn-primary btn-block" type="button">Get Random Question</button>
+      </form>
+      </div>
 
 	<script>
 		$(function() {
-			$('#btn').click(function() {
+			//Random question
+			$('#randomBtn').click(function() {
 		        $.ajax({
 		            url: '/getRandomQuestion',
 		            data: $('form').serialize(),
 		            dataType: 'json',
 		            type: 'GET',
 		            success: function(response) {
-		            	$('body').append('<p>' + response['question'] + '</p>')
-		                console.log(response['queston']);
+		            	$('#answerBox').html('<p>' + response['question'] + '</p>'+ '<label for="inputAnswer" class="sr-only">Password</label><input type="text" name="inputAnswer" id="inputAnswer" class="form-control" placeholder="Your Answer" required>  <p>  ' + response['answer'] + '</p>')
+		                console.log(response['question']);
 		            },
 		            error: function(error) {
 		                console.log(error);
-		            }
+		            }	
         		});
+        		return false;
 			})
 		});
 	</script>

@@ -6,7 +6,7 @@ import urllib.request as ur
 app = Flask(__name__)
 
 
-@app.route('/mainMenu')
+@app.route('/')
 def main():
 	return render_template('mainMenu.html')
 

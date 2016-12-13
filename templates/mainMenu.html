@@ -7,19 +7,14 @@
 </head>
 <body>
 	<h3>WELCOME TO JEOPARDY QUESTION GAME MANE</h3>
-	<button id="newGame">Create a New Game</button>
+	<button id="newGame" >Create a New Game</button>
 	<button id="highScore">High Scores</button>
 	<button id="quitGame">Quit Game</button>
 	
 	<script>
 		$(function(){
 			$('#newGame').click(function(){
-				$.ajax({
-					url: '/newGame',
-					data: $('form').serialize(),
-					dataType: 'json',
-					type: 'GET'
-				});
+						window.location.replace('/newGame');
 			})
 		});
 		$(function(){
@@ -35,7 +30,7 @@
 		$(function(){
 			$('#quitGame').click(function(){
 				$.ajax({
-					url: '/highScore'
+					url: '/highScore',
 					data: $('form').serialize(),
 					dataType: 'json',
 					type: 'Get'
