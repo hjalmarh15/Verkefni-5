@@ -44,12 +44,15 @@ def get_random_question():
 	data = json.loads(response.decode('utf-8'))[0]
 	return json.dumps(data)
 
+
+
+@app.route('/getCategories')
 def get_categories():
-	request = 'http://jservice.io/api/categories?count=5&offset=10'
+	request = 'http://jservice.io/api/categories?count=3&offset=20'
 
 	response = ur.urlopen(request).read()
 	data = json.loads(response.decode('utf-8'))
-	return data
+	return json.dumps(data)
 	get_category(category_id)
 
 def get_category(category_id):

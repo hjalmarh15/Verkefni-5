@@ -12,7 +12,7 @@
 	 <div class="jumbotron">
         <h1>Verkefni 5</h1>
          <div id='answerBox'></div>
-        <button id="randomBtn" class="btn btn-lg btn-primary btn-block" type="button">Get Random Question</button>
+        <button id="randomBtn" class="btn btn-lg btn-primary btn-block" type="button">Get Categories</button>
       </form>
       </div>
 
@@ -21,13 +21,16 @@
 			//Random question
 			$('#randomBtn').click(function() {
 		        $.ajax({
-		            url: '/getRandomQuestion',
+		            url: '/getCategories',
 		            data: $('form').serialize(),
 		            dataType: 'json',
 		            type: 'GET',
 		            success: function(response) {
-		            	$('#answerBox').html('<p>' + response['question'] + '</p>'+ '<label for="inputAnswer" class="sr-only">Password</label><input type="text" name="inputAnswer" id="inputAnswer" class="form-control" placeholder="Your Answer" required>  <p>  ' + response['answer'] + '</p>')
-		                console.log(response['question']);
+		            	for(i = 0; i < response.length; i++) {
+		            		$('#answerBox').append('<button id="' + response[i]['title'] + '" class="btn btn-lg btn-primary btn-block" type="button">' + response[i]['title'] + '</button>')
+		            	}
+		            	//$('#answerBox').html('<p>' + response['question'] + '</p>'+ '<label for="inputAnswer" class="sr-only">Password</label><input type="text" name="inputAnswer" id="inputAnswer" class="form-control" placeholder="Your Answer" required>  <p>  ' + response['answer'] + '</p>')
+		                console.log(response);
 		            },
 		            error: function(error) {
 		                console.log(error);
