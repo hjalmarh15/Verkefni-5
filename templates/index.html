@@ -4,60 +4,101 @@
 	<title>Jeopardy</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"
         type="text/javascript"></script>
-     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
      <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+     <style>
+     	body {
+     		margin:20%;
+     		margin-top:5%;
+     	}
+     .jumbotron {
+     	text-align: center;
+     }
+     .takki {
+     	padding:10%;
+     	margin:2%;
+     }
+     </style>
 
 </head>
 <body>
 	 <div class="jumbotron">
         <h1>Verkefni 5</h1>
          <div id='answerBox'></div>
-        <button id="randomBtn" class="btn btn-lg btn-primary btn-block" type="button">Get Categories</button>
+         <select id="categorySelect" class="form-control"></select>
+
+        <button id="categoryBtn" class="btn btn-lg btn-primary btn-block" type="button">Get Categories</button>
       </form>
       </div>
 
 	<script>
 		$(function() {
+			$('#categorySelect').hide()
 			//Random question
-			$('#randomBtn').click(function() {
+			$('#categoryBtn').click(function() {
 		        $.ajax({
 		            url: '/getCategories',
 		            data: $('form').serialize(),
 		            dataType: 'json',
 		            type: 'GET',
 		            success: function(response) {
+		            	$('#answerBox').html('');
+						
+
 		            	for(i = 0; i < response.length; i++) {
+		            		$('#categorySelect').append('<option value="'+ response[i]['id'] + '">'+ response[i]['title'] + '</option>')
+
+		            	$('#categorySelect').show()
+							/*
 		            		$('#answerBox').append('<button onclick="category(' + response[i]['id'] + ')" " class="btn btn-lg btn-primary btn-block" type="button">' + response[i]['title'] + '</button>')
+		            		*/
 		            	}
-		            	//$('#answerBox').html('<p>' + response['question'] + '</p>'+ '<label for="inputAnswer" class="sr-only">Password</label><input type="text" name="inputAnswer" id="inputAnswer" class="form-control" placeholder="Your Answer" required>  <p>  ' + response['answer'] + '</p>')
 		                console.log(response);
 		            },
 		            error: function(error) {
 		                console.log(error);
 		            }	
         		});
-			})
+			});
 
+
+		$('#categorySelect').change(function() {
+			var id = $(this).val();
+			category(id);
 		});
 
-		function category(catID) {
-			$.ajax({
-				url:'/getCategory',
-				data : {'data':catID}, 
-				dataType: 'json',
-  				type: 'GET',	
-				success: function(response) {
-					console.log(response['clues'])
-					$('#answerBox').html('');
-					for (i = 0; i < response['clues'].length;i++) {
-						$('#answerBox').append('<p>' + response['clues'][i]['question'] + '</p>');
+	});
+	
+	$('#takki').click(function(){
+		alert('hello')
+	})
+
+	function getValue(valID) {
+		$('#q' + valID).show()
+	}
+	function category(catID) {
+		$.ajax({
+			url:'/getCategory',
+			data : {'data':catID}, 
+			dataType: 'json',
+				type: 'GET',	
+			success: function(response) {
+				console.log(response['clues'])
+				$('#answerBox').html('');
+				for (i = 0; i < response['clues'].length;i++) {
+					$('#answerBox').append('<button onClick="getValue(' + response['clues'][i]['value'] + ')" id="' + response['clues'][i]['value'] + '" class="takki btn btn-primary">$' + response['clues'][i]['value'] + '</button>')
 					}
-				},
-				error: function(error) {
-					console.log(error)
+				for (i = 0; i < response['clues'].length;i++) {
+					$('#answerBox').append('<p id="q' +response['clues'][i]['value'] + '">' + response['clues'][i]['question'] + '</p>')
+					$('#q' + response['clues'][i]['value']).hide()
 				}
-			});
-		};
+				},
+			error: function(error) {
+			}
+		});
+	};	
+
 	</script>
 </body>
 </html>
