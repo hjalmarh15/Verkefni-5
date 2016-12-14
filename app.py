@@ -1,6 +1,6 @@
 
 import json
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import urllib.request as ur
 
 app = Flask(__name__)
@@ -55,11 +55,14 @@ def get_categories():
 	return json.dumps(data)
 	get_category(category_id)
 
-def get_category(category_id):
-	request = 'http://jservice.io/api/category?id=' + str(category_id) 
-	response = ur.urlopen(request).read()
+
+@app.route('/getCategory', methods=['GET'])
+def get_category():
+	category_id = request.args.get('data')
+	url = 'http://jservice.io/api/category?id=' + str(category_id) 
+	response = ur.urlopen(url).read()
 	data = json.loads(response.decode('utf-8'))
-	return data
+	return json.dumps(data)
 
 
 def sanitize(theString):
