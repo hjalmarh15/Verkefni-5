@@ -2,12 +2,14 @@
 import json
 from flask import Flask, render_template, request
 import urllib.request as ur
+from klasar import Game, Player
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def main():
+
 	return render_template('mainMenu.html')
 
 @app.route('/newGame')
@@ -17,21 +19,7 @@ def newGame():
 @app.route('/highScores')
 def highScores():
 	return render_template('highScores.html')
-'''
-def main():
-	question = get_random_question()
-	id = question['category']['id']
-	category = get_category(id)['title']
-	print('The category is: ' + category)
-	print(question['question'])	
-	userAnswer = input('Your answer: ')
-	theAnswer = sanitize(question['answer']).lower()
-	if userAnswer.lower() == theAnswer:
-		print('Correct!!')
-	else:
-		print('Incorrect :(')
-		print('The answer is:', question['answer'])
-'''
+
 
 @app.route('/getRandomQuestion')
 def get_random_question():
