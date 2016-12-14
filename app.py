@@ -60,6 +60,10 @@ def get_category():
 	data = json.loads(response.decode('utf-8'))
 	return json.dumps(data)
 
+@app.route('/getPlayers', methods=['Post'])
+def get_player_names():
+	num = request.args.get('data')
+	return json.dumps(num)
 
 def sanitize(theString):
 	theString.replace('<i>', '')
