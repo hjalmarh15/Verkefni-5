@@ -12,14 +12,10 @@ def main():
 
 @app.route('/newGame')
 def newGame():
-	return render_template('index.html')
+	return render_template('newGame.html')
 
 @app.route('/highScores')
 def highScores():
-	return render_template('highScores.html')
-
-@app.route('/quitGame')
-def quitGame():
 	return render_template('highScores.html')
 '''
 def main():
