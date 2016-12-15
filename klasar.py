@@ -1,10 +1,11 @@
 class Game:
+	current = 1
 	def __init__(self):
 		self.players = []
-
+		self.category = ''
 
 class Player:
-	def __init(self):
+	def __init__(self):
 		self.name = ''
 		self.id = 0
 		self.score = 0
