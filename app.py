@@ -59,13 +59,16 @@ def get_random_question():
 
 @app.route('/getCategories')
 def get_categories():
-    global categoryOffset
-    offset = random.uniform(0, 15000)
-    request = 'http://jservice.io/api/categories?count=5&offset=' + str(offset)
-    response = ur.urlopen(request).read()
-    data = json.loads(response.decode('utf-8'))
-    return json.dumps(data)
-    get_category(category_id)
+	if game.categories == '':
+		offset = random.uniform(0, 15000)
+		request = 'http://jservice.io/api/categories?count=5&offset=' + str(offset)
+		response = ur.urlopen(request).read()
+		data = json.loads(response.decode('utf-8'))
+		game.categories = data
+	else:
+		data = game.categories
+
+	return json.dumps(data)
 
 
 @app.route('/getCategory', methods=['GET'])
@@ -118,10 +121,6 @@ def submit_answer():
     else:
         game.current += 1
     
-    if game.turn == 2:
-    	finalResult()
-        
-
     return jsonify(**dic)
 
 

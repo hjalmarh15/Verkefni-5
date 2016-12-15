@@ -32,7 +32,7 @@
          <div id='answerBox'></div>
          <select id="categorySelect" class="form-control"></select>
 
-        <button id="categoryBtn" class="btn btn-lg btn-primary btn-block" type="button">Get Categories</button>
+       <!-- <button id="categoryBtn" class="btn btn-lg btn-primary btn-block" type="button">Get Categories</button>-->
       </form>
       </div>
      <div id="scoreBoard">
@@ -42,13 +42,19 @@
 	<script>
 		$(function() {
 		    getScore()
-
 		    getName()
-
+		    getCategories()
 			$('#categorySelect').hide()
 			//Random question
-			$('#categoryBtn').click(function() {
-		        $.ajax({
+		});
+
+		$('#categorySelect').change(function() {
+			var id = $(this).val();
+			category(id);
+		});
+
+		function getCategories() {
+			$.ajax({
 		            url: '/getCategories',
 		            data: $('form').serialize(),
 		            dataType: 'json',
@@ -67,13 +73,8 @@
 		            error: function(error) {
 		                console.log(error);
 		            }	
-        		});
 			});
-
-		$('#categorySelect').change(function() {
-			var id = $(this).val();
-			category(id);
-		});
+		}
 
 		function getName() {
                 $.ajax({
@@ -87,8 +88,8 @@
                     error: function (error) {
                         console.log(error);
                     }
-                });
-            }
+        		});
+        	}
 
 
 		function getScore() {
@@ -131,7 +132,6 @@
 				}
 			})
 		});
-	});
 	
 
 	
@@ -139,6 +139,7 @@
 		$('#questionBox' + valID).show()
 		$('#questionBox'+ valID).append('<button id="' + valID + '" class="takki btn btn-primary">Submit!</button>')
 	}
+
 	function category(catID) {
 		var category = $('#categorySelect option:selected').text()
 		$('#categorySelect').hide()
@@ -162,8 +163,7 @@
 					$('#questionBox' + response['clues'][i]['id']).hide()
 				}
 				},
-			error: function(error) {
-			}
+
 		});
 	};	
 
