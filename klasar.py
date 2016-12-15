@@ -1,5 +1,5 @@
 class Game:
-	current = 1
+	current = 0
 	def __init__(self):
 		self.players = []
 		self.category = ''
