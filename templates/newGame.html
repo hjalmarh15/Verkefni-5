@@ -40,28 +40,10 @@
                 for (i = 1; i <= num; i++) {
                     $('#players').append('<div class="form-group">' + '<label for="' + i + '">Name:</label>' + '<input ' + 'type="text" class="form-control" ' + 'name="Player' + i + '" ' + 'id="' + i + '"' + '>' + '</div>');
                 }
-                $('#players').append('<button onclick="getPlayers(' + num + ')" ' + 'class="btn btn-default">Continue</button>')
+                $('#players').append('<button class="btn btn-default">Continue</button>')
                 });
 
               });
-
-            function getPlayers(num) {
-                    alert(num)
-                    /*
-                        $.ajax({
-                            url: '/getPlayers',
-                            data: {'number': num},
-                            dataType: 'json',
-                            type: 'POST',
-                            success: function (response) {
-                                console.log(response)
-                            },
-                            error: function (error) {
-                                console.log(error)
-                            }
-                        });
-                        */
-              };
         </script>
 </body>
 </html>
