@@ -93,7 +93,6 @@ def get_player_names():
 
 @app.route('/submitAnswer', methods=['POST', 'GET'])
 def submit_answer():
-<<<<<<< HEAD
 	dic = {}
 	dic['answer'] = request.args.get('answer')
 	ID = request.args.get('id')
