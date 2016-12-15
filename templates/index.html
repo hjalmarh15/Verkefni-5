@@ -120,15 +120,14 @@
 				type: 'GET',
 				success: function(response) {
 					result = response['result']
-					
+					$('.jumbotron').html('')
 					if (result.toString() == 'false') {
-						$('.jumbotron').append('<div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Not the right answer. The right answer is: ' + response['correctAnswer'] + '</div>')
+						$('.jumbotron').append('<div class="alert alert-danger alert-dismissible"><a href="/game" class="close" data-dismiss="alert" aria-label="close">&times;</a>Not the right answer. The right answer is: ' + response['correctAnswer'] + '</div>')
 					}
 					else {
-						$('.jumbotron').append('<div class="alert alert-success alert-dismissable">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Correct!</div>')
+						$('.jumbotron').append('<div class="alert alert-success alert-dismissable">  <a href="/game" class="close" data-dismiss="alert" aria-label="close">&times;</a>Correct!</div>')
 					}
-					getScore()
-                    getName()
+
 				}
 			})
 		});
