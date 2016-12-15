@@ -22,12 +22,16 @@ def newGame():
 
 @app.route('/highScores')
 def highScores():
-    return render_template('highScores.html')
+    return render_template('highScore.html')
 
 
 @app.route('/game')
 def play():
     return render_template('index.html')
+
+@app.route('/final')
+def finalResult():
+    return render_template('final.html')
 
 
 @app.route('/getPlayerName')
@@ -93,28 +97,38 @@ def get_player_names():
 
 @app.route('/submitAnswer', methods=['POST', 'GET'])
 def submit_answer():
-	dic = {}
-	dic['answer'] = request.args.get('answer')
-	ID = request.args.get('id')
-	qNa = get_question_and_answer(ID)
-	dic['correctAnswer'] = sanitize(str(qNa[1]))
-	dic['question'] = qNa[0]
-	value = qNa[2]
-	if correct(str(dic['answer']), str(dic['correctAnswer'])):
-		dic['result'] = True
-		game.players[game.current].score += int(value)
-	else:
-		dic['result'] = False
-		game.players[game.current].score -= int(value)
-	return jsonify(**dic)
+    dic = {}
+    dic['answer'] = request.args.get('answer')
+    ID = request.args.get('id')
+    qNa = get_question_and_answer(ID)
+    dic['correctAnswer'] = sanitize(str(qNa[1]))
+    dic['question'] = qNa[0]
+    value = qNa[2]
+    if correct(str(dic['answer']), str(dic['correctAnswer'])):
+        dic['result'] = True
+        game.players[game.current].score += int(value)
 
+    else:
+        dic['result'] = False
+        game.players[game.current].score -= int(value)
+
+    if game.current == len(game.players)-1:
+        game.current = 0
+        game.turn += 1
+    else:
+        game.current += 1
+    print(game.turn)
+    if int(game.turn) > 2:
+        return render_template('final.html')
+
+    return jsonify(**dic)
 
 
 def sanitize(theString):
-	print(theString)
-	theString.replace('<i>', '')
-	theString.replace('</i>', '')
-	return theString
+    print(theString)
+    theString.replace('<i>', '')
+    theString.replace('</i>', '')
+    return theString
 
 
 def get_question_and_answer(ID):
@@ -129,17 +143,16 @@ def get_question_and_answer(ID):
     return (q, a, v)
 
 
-
-
 def correct(answer, rightAnswer):
-	if answer.lower() == rightAnswer.lower():
-		return True
-	compare = difflib.SequenceMatcher(None, answer.lower(), rightAnswer.lower())
-	ratio = compare.ratio()
-	if ratio >= 0.8:
-		return True
+    if answer.lower() == rightAnswer.lower():
+        return True
+    compare = difflib.SequenceMatcher(None, answer.lower(), rightAnswer.lower())
+    ratio = compare.ratio()
+    if ratio >= 0.8:
+        return True
 
-	return False
+    return False
+
 
 if __name__ == "__main__":
     app.run()

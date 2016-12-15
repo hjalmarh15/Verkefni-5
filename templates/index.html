@@ -81,6 +81,7 @@
                     dataType: 'json',
                     type: 'GET',
                     success: function (response) {
+                        $('#playerName').html('');
                         $('#playerName').append('It is your turn ' + response + ', please select a category and difficulty');
                     },
                     error: function (error) {
@@ -127,7 +128,11 @@
 						$('.jumbotron').append('<div class="alert alert-success alert-dismissable">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Correct!</div>')
 					}
 					getScore()
+<<<<<<< HEAD
 
+=======
+                    getName()
+>>>>>>> 1546eb81dd5c5aa226c1aac5856614bd937d0c68
 				}
 			})
 		});
