@@ -1,8 +1,10 @@
 import json
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, make_response
 import urllib.request as ur
 import difflib
 import random
+
+
 from klasar import Game, Player
 
 app = Flask(__name__)
@@ -115,14 +117,23 @@ def submit_answer():
         dic['result'] = False
         game.players[game.current].score -= int(value)
 
-    if game.current == len(game.players)-1:
-        game.current = 0
-        game.turn += 1
-    else:
-        game.current += 1
+    update_game()
     
     return jsonify(**dic)
 
+@app.route('/updateGame', methods=['POST'])
+def update_game():
+    print(game.turn)
+    if game.current == len(game.players)-1:
+        game.current = 0
+        game.turn += 1
+        if game.turn >= 2:
+            print('Virkadi')
+            return json.dumps(True)
+        else:
+            return json.dumps(False)
+    else:
+        game.current += 1
 
 def sanitize(theString):
     print(theString)

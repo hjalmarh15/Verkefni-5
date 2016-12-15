@@ -92,6 +92,21 @@
         		});
         	}
 
+        function gameUpdate() {
+            $.ajax({
+                url: 'updateGame',
+                dataType: 'json',
+                type: 'GET',
+                success: function (responce) {
+                    if (responce) {
+                        window.location.replace('final.html');
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
 
 		function getScore() {
                 $.ajax({
@@ -131,6 +146,7 @@
 					}
 					getScore()
                     getName()
+                    gameUpdate()
 				}
 			})
 		});
