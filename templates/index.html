@@ -78,8 +78,7 @@
 					result = response['result']
 					
 					if (result.toString() == 'false') {
-						$('.jumbotron').append('<div class= 
-							"alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Not the right answer. The right answer is: ' + response['correctAnswer'] + '</div>')
+						$('.jumbotron').append('<div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Not the right answer. The right answer is: ' + response['correctAnswer'] + '</div>')
 					}
 					else {
 						$('.jumbotron').append('<div class="alert alert-success alert-dismissable">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Correct!</div>')

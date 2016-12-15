@@ -60,7 +60,7 @@ def get_category():
 
 @app.route('/getPlayers', methods=['POST', 'GET'])
 def get_player_names():
-    return json.dumps(len(request.form))
+    num =  len(request.form)
     lstOfPLayers = []
     for i in range(1, num):
         tempPlayer = Player()
@@ -68,9 +68,8 @@ def get_player_names():
         tempPlayer.id = i
         tempPlayer.name = playerInfo
         lstOfPLayers.append(tempPlayer)
-    toplel = Game(lstOfPLayers)
-    return json.dumps({'success': True})
-
+    game.players = lstOfPLayers
+    return render_template('index.html')
 
 
 @app.route('/submitAnswer', methods=['POST', 'GET'])
