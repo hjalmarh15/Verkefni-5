@@ -5,11 +5,10 @@ import urllib.request as ur
 from klasar import Game, Player
 
 app = Flask(__name__)
-
+categoryOffset = 0
 
 @app.route('/')
 def main():
-
 	return render_template('mainMenu.html')
 
 @app.route('/newGame')
@@ -33,12 +32,11 @@ def get_random_question():
 	return json.dumps(data)
 
 
-
 @app.route('/getCategories')
 def get_categories():
-
-	request = 'http://jservice.io/api/categories?count=3&offset=45'
-
+	global categoryOffset
+	request = 'http://jservice.io/api/categories?count=3&offset=' + str(categoryOffset)
+	categoryOffset += 3
 	response = ur.urlopen(request).read()
 	data = json.loads(response.decode('utf-8'))
 	return json.dumps(data)
@@ -53,10 +51,16 @@ def get_category():
 	data = json.loads(response.decode('utf-8'))
 	return json.dumps(data)
 
-@app.route('/getPlayers', methods=['Post'])
+@app.route('/getPlayers', methods=['POST', 'GET'])
 def get_player_names():
 	num = request.args.get('data')
 	return json.dumps(num)
+
+
+@app.route('/submitAnswer' ,methods=['POST', 'GET'])
+def submit_answer():
+	answer = request.args.get('data')
+	return json.dumps(answer)
 
 def sanitize(theString):
 	theString.replace('<i>', '')

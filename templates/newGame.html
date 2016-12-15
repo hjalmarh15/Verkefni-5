@@ -46,12 +46,11 @@
               });
 
             function getPlayers(num) {
-                        console.log(num);
                         $.ajax({
                             url: '/getPlayers',
                             data: {'data': num},
                             dataType: 'json',
-                            type: 'POST',
+                            type: 'GET',
                             success: function (response) {
                                 console.log(response)
                             },
