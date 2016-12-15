@@ -24,15 +24,48 @@
 <body>
 	 <div class="jumbotron">
         <h1>Verkefni 5</h1>
+         <h3 id="playerName"></h3>
          <div id='answerBox'></div>
          <select id="categorySelect" class="form-control"></select>
 
         <button id="categoryBtn" class="btn btn-lg btn-primary btn-block" type="button">Get Categories</button>
       </form>
       </div>
+     <div id="scoreBoard"></div>
 
 	<script>
 		$(function() {
+		    $(function getScore() {
+                $.ajax({
+                    url: '/getScoreBoard',
+                    dataType: 'json',
+                    type: 'GET',
+                    success: function (response) {
+                        console.log(response)
+                        $('#scoreBoard').append('<table style="width:100%>');
+                        var counter = 0
+                        for (iter in response){
+                            console.log(response[iter])
+                            $('#scoreBoard').append('<tr> <th> ' + response[iter][0] + '</th> <th> ' + response[iter][1] + '</tr>');
+                            counter++;
+                        }
+                        $('#scoreBoard').append('</table>');
+                    }
+                });
+            });
+		    $(function getName() {
+                $.ajax({
+                    url: '/getPlayerName',
+                    dataType: 'json',
+                    type: 'GET',
+                    success: function (response) {
+                        $('#playerName').append('It is your turn ' + response + ', please select a category and difficulty');
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            })
 			$('#categorySelect').hide()
 			//Random question
 			$('#categoryBtn').click(function() {
@@ -57,7 +90,6 @@
 		            }	
         		});
 			});
-
 
 		$('#categorySelect').change(function() {
 			var id = $(this).val();
