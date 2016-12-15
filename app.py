@@ -60,8 +60,7 @@ def get_category():
 
 @app.route('/getPlayers', methods=['POST', 'GET'])
 def get_player_names():
-    num = request.args.get('number')
-    return num
+    return json.dumps(len(request.form))
     lstOfPLayers = []
     for i in range(1, num):
         tempPlayer = Player()
