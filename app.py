@@ -117,9 +117,10 @@ def submit_answer():
         game.turn += 1
     else:
         game.current += 1
-    print(game.turn)
-    if int(game.turn) > 2:
-        return render_template('final.html')
+    
+    if game.turn == 2:
+    	finalResult()
+        
 
     return jsonify(**dic)
 
