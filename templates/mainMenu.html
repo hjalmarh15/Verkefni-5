@@ -5,12 +5,22 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"
         type="text/javascript"></script>
    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   	<style>
+   		.main {
+   			text-align:center;
+   			margin-left:10%;
+   			margin-right:10%;
+   		}
+   		body {
+   			text-align:center;
+   			background-color:#f49b42;
+   		}
+   	</style>
 </head>
 <body>
-	<h3>WELCOME TO JEOPARDY QUESTION GAME MANE</h3>
+	<div class="main"><img src="https://www.jeopardy.com/Assets/jeopardy/images/_facebook/fb_profile.jpg"></div>
 	<button class="btn btn-primary" id="newGame" >Create a New Game</button>
-	<button class="btn btn-primary" id="highScore">High Scores</button>
-	
+		<button class="btn btn-primary" id="highScore">High Scores</button>
 	<script>
 		$(function(){
 			$('#newGame').click(function(){

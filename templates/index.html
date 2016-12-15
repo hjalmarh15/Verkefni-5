@@ -44,6 +44,7 @@
 		    getScore()
 
 		    getName()
+
 			$('#categorySelect').hide()
 			//Random question
 			$('#categoryBtn').click(function() {
@@ -55,7 +56,7 @@
 		            success: function(response) {
 		            	$('#answerBox').html('');
 						
-
+		            	$('#categorySelect').append('<option disabled selected value> -- select a category -- </option>')
 		            	for(i = 0; i < response.length; i++) {
 		            		$('#categorySelect').append('<option value="'+ response[i]['id'] + '">'+ response[i]['title'] + '</option>')
 
@@ -126,6 +127,7 @@
 						$('.jumbotron').append('<div class="alert alert-success alert-dismissable">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Correct!</div>')
 					}
 					getScore()
+
 				}
 			})
 		});
