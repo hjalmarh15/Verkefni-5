@@ -1,10 +1,11 @@
 import json
 from flask import Flask, render_template, request, jsonify
 import urllib.request as ur
+import difflib
+import random
 from klasar import Game, Player
 
 app = Flask(__name__)
-categoryOffset = 0
 
 
 game = Game()
@@ -40,8 +41,8 @@ def get_random_question():
 @app.route('/getCategories')
 def get_categories():
     global categoryOffset
-    request = 'http://jservice.io/api/categories?count=3&offset=' + str(categoryOffset)
-    categoryOffset += 3
+    offset = random.uniform(0, 15000)
+    request = 'http://jservice.io/api/categories?count=5&offset=' + str(offset)
     response = ur.urlopen(request).read()
     data = json.loads(response.decode('utf-8'))
     return json.dumps(data)
@@ -80,24 +81,24 @@ def submit_answer():
 	dic['answer'] = request.args.get('answer')
 	ID = request.args.get('id')
 	qNa = get_question_and_answer(ID)
-	dic['correctAnswer'] = sanitize(qNa[1])
+	dic['correctAnswer'] = sanitize(str(qNa[1]))
 	dic['question'] = qNa[0]
 	value = qNa[2]
-	if str(dic['answer']) == str(dic['correctAnswer']):
+	if correct(str(dic['answer']), str(dic['correctAnswer'])):
 		dic['result'] = True
 		game.players[game.current].score += int(value)
 	else:
 		dic['result'] = False
 		game.players[game.current].score -= int(value)
-	print(game.players[game.current].score)
 	return jsonify(**dic)
 
 
 
 def sanitize(theString):
-    theString.replace('<i>', '')
-    theString.replace('</i>', '')
-    return theString
+	print(theString)
+	theString.replace('<i>', '')
+	theString.replace('</i>', '')
+	return theString
 
 def get_question_and_answer(ID):
 	global game
@@ -109,6 +110,18 @@ def get_question_and_answer(ID):
 			v = cat[i]['value']
 			break
 	return (q, a, v)
+
+
+
+def correct(answer, rightAnswer):
+	if answer.lower() == rightAnswer.lower():
+		return True
+	compare = difflib.SequenceMatcher(None, answer.lower(), rightAnswer.lower())
+	ratio = compare.ratio()
+	if ratio >= 0.8:
+		return True
+
+	return False
 
 if __name__ == "__main__":
     app.run()
