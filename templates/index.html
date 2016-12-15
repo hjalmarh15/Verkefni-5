@@ -49,9 +49,6 @@
 		            		$('#categorySelect').append('<option value="'+ response[i]['id'] + '">'+ response[i]['title'] + '</option>')
 
 		            	$('#categorySelect').show()
-							/*
-		            		$('#answerBox').append('<button onclick="category(' + response[i]['id'] + ')" " class="btn btn-lg btn-primary btn-block" type="button">' + response[i]['title'] + '</button>')
-		            		*/
 		            	}
 		                console.log(response);
 		            },
@@ -74,11 +71,19 @@
 			console.log(id)
 			$.ajax({
 				url: '/submitAnswer',
-				data: {'data': answer},
+				data: {'answer': answer, 'id': id},
 				datatype: 'json',
 				type: 'GET',
 				success: function(response) {
-					console.log(response)
+					result = response['result']
+					
+					if (result.toString() == 'false') {
+						$('.jumbotron').append('<div class= 
+							"alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Not the right answer. The right answer is: ' + response['correctAnswer'] + '</div>')
+					}
+					else {
+						$('.jumbotron').append('<div class="alert alert-success alert-dismissable">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Correct!</div>')
+					}
 				}
 			})
 		});

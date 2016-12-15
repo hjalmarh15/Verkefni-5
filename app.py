@@ -1,11 +1,13 @@
 
 import json
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import urllib.request as ur
 from klasar import Game, Player
 
 app = Flask(__name__)
 categoryOffset = 0
+
+game = Game()
 
 @app.route('/')
 def main():
@@ -45,10 +47,12 @@ def get_categories():
 
 @app.route('/getCategory', methods=['GET'])
 def get_category():
+	global game
 	category_id = request.args.get('data')
 	url = 'http://jservice.io/api/category?id=' + str(category_id) 
 	response = ur.urlopen(url).read()
 	data = json.loads(response.decode('utf-8'))
+	game.category = data
 	return json.dumps(data)
 
 @app.route('/getPlayers', methods=['POST', 'GET'])
@@ -59,14 +63,35 @@ def get_player_names():
 
 @app.route('/submitAnswer' ,methods=['POST', 'GET'])
 def submit_answer():
-	answer = request.args.get('data')
-	return json.dumps(answer)
+	dic = {}
+	dic['answer'] = request.args.get('answer')
+	ID = request.args.get('id')
+	qNa = get_question_and_answer(ID)
+	dic['correctAnswer'] = sanitize(qNa[1])
+	dic['question'] = qNa[0]
+	value = qNa[2]
+	if str(dic['answer']) == str(dic['correctAnswer']):
+		dic['result'] = True
+	else:
+		dic['result'] = False
+	return jsonify(**dic)
+
 
 def sanitize(theString):
 	theString.replace('<i>', '')
 	theString.replace('</i>', '')
 	return theString
 
+def get_question_and_answer(ID):
+	global game
+	cat = game.category['clues']
+	for i in range(len(cat)):
+		if str(ID) == str(cat[i]['id']):
+			q = cat[i]['question']
+			a = cat[i]['answer']
+			v = cat[i]['value']
+			break
+	return (q, a, v)
 
 if __name__ == "__main__":
 	app.run()
