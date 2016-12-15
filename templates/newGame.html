@@ -26,7 +26,7 @@
                 </ul>
         </div>
         <div>
-            <form id="players"></form>
+            <form  id="players"></form>
         </div>
 
         <script>
@@ -38,21 +38,23 @@
                 var num = parseInt(selText);
                 $('#players').html('');
                 for (i = 1; i <= num; i++) {
-                    $('#players').append('<div class="form-group">' + '<label for="' + i + '">Name:</label>' + '<input ' + 'type="text" class="form-control" ' + 'value="Player' + i + '" ' + 'id="' + i + '"' + '>' + '</div>');
+                    $('#players').append('<div class="form-group">' + '<label for="' + i + '">Name:</label>' + '<input ' + 'type="text" class="form-control" ' + 'name="Player' + i + '" ' + 'id="' + i + '"' + '>' + '</div>');
                 }
-                $('#players').append('<button type="submit" onclick="getPlayers(' + num + ')" ' + 'class="btn btn-default">Continue</button>')
+                $('#players').append('<button onclick="getPlayers(' + num + ')" ' + 'class="btn btn-default">Continue</button>')
                 });
 
               });
 
             function getPlayers(num) {
+                    alert(num)
                         $.ajax({
                             url: '/getPlayers',
-                            data: {'data': num},
+                            data: {'number': num},
                             dataType: 'json',
-                            type: 'GET',
+                            type: 'POST',
                             success: function (response) {
-                                console.log(response)
+                                console.log('Virkar')
+                                window.location.replace('/game')
                             },
                             error: function (error) {
                                 console.log(error)
