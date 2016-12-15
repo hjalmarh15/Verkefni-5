@@ -18,6 +18,10 @@
      	padding:10%;
      	margin:2%;
      }
+     #scoreTable {
+     	width:80%;
+     	margin:10%;
+     }
      </style>
 
 </head>
@@ -31,41 +35,15 @@
         <button id="categoryBtn" class="btn btn-lg btn-primary btn-block" type="button">Get Categories</button>
       </form>
       </div>
-     <div id="scoreBoard"></div>
+     <div id="scoreBoard">
+     	<table id="scoreTable" class="table"></table>
+     </div>
 
 	<script>
 		$(function() {
-		    $(function getScore() {
-                $.ajax({
-                    url: '/getScoreBoard',
-                    dataType: 'json',
-                    type: 'GET',
-                    success: function (response) {
-                        console.log(response)
-                        $('#scoreBoard').append('<table style="width:100%>');
-                        var counter = 0
-                        for (iter in response){
-                            console.log(response[iter])
-                            $('#scoreBoard').append('<tr> <th> ' + response[iter][0] + '</th> <th> ' + response[iter][1] + '</tr>');
-                            counter++;
-                        }
-                        $('#scoreBoard').append('</table>');
-                    }
-                });
-            });
-		    $(function getName() {
-                $.ajax({
-                    url: '/getPlayerName',
-                    dataType: 'json',
-                    type: 'GET',
-                    success: function (response) {
-                        $('#playerName').append('It is your turn ' + response + ', please select a category and difficulty');
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
-            })
+		    getScore()
+
+		    getName()
 			$('#categorySelect').hide()
 			//Random question
 			$('#categoryBtn').click(function() {
@@ -96,6 +74,38 @@
 			category(id);
 		});
 
+		function getName() {
+                $.ajax({
+                    url: '/getPlayerName',
+                    dataType: 'json',
+                    type: 'GET',
+                    success: function (response) {
+                        $('#playerName').append('It is your turn ' + response + ', please select a category and difficulty');
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+
+		function getScore() {
+                $.ajax({
+                    url: '/getScoreBoard',
+                    dataType: 'json',
+                    type: 'GET',
+                    success: function (response) {
+                        console.log(response)
+                        $('#scoreTable').html('')
+                        for (iter in response){
+                            console.log(response[iter])
+                            $('#scoreTable').append('<tr> <th>' + response[iter][0] + '</th> <th> ' + response[iter][1] + '</tr>');
+                        }
+                        
+                    }
+                });
+            }
+
 		$(document).on('click', '.takki', function(){
 			var id = $(this).attr('id')
 			var answer = $('#answer' + id).val()
@@ -115,6 +125,7 @@
 					else {
 						$('.jumbotron').append('<div class="alert alert-success alert-dismissable">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>Correct!</div>')
 					}
+					getScore()
 				}
 			})
 		});
