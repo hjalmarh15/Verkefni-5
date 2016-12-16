@@ -3,8 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>The final score of the game</title>
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
 </head>
 <body>
-    <h2>Hér eru nettir sjomlar</h2>
+    <h1>GAME OVER</h1>
+    <table id="results" class="table"></table>
+
+    <script>
+    	$(function(){
+    		getFinal();
+    	});
+
+    	function getFinal() {
+    		$.ajax({
+    			url: '/scoreBoard',
+	            dataType: 'json',
+	            type: 'GET',
+		        success:function(response){
+		        	for (iter in response) {
+		        		console.log(iter)
+		        		console.log(response[iter])
+	        			$('#results').append('<tr> <th>' + response[iter][0] + '</th><th> ' + response[iter][1] + '</tr>');
+	        		}
+		        },
+		        error: function(error) {
+		        	alert('error')
+		        }
+    		});
+    	};
+    </script>
 </body>
 </html>

@@ -69,7 +69,6 @@
 
 		            	$('#categorySelect').show()
 		            	}
-		                console.log(response);
 		            },
 		            error: function(error) {
 		                console.log(error);
@@ -97,9 +96,9 @@
                 url: 'updateGame',
                 dataType: 'json',
                 type: 'GET',
-                success: function (responce) {
-                    if (responce) {
-                        window.location.replace('final.html');
+                success: function (response) {
+                    if (response) {
+                        window.location.replace('/final');
                     }
                 },
                 error: function (error) {
@@ -114,10 +113,8 @@
                     dataType: 'json',
                     type: 'GET',
                     success: function (response) {
-                        console.log(response)
                         $('#scoreTable').html('')
                         for (iter in response){
-                            console.log(response[iter])
                             $('#scoreTable').append('<tr> <th>' + response[iter][0] + '</th> <th> ' + response[iter][1] + '</tr>');
                         }
                         
@@ -128,8 +125,6 @@
 		$(document).on('click', '.takki', function(){
 			var id = $(this).attr('id')
 			var answer = $('#answer' + id).val()
-			console.log(answer)
-			console.log(id)
 			$.ajax({
 				url: '/submitAnswer',
 				data: {'answer': answer, 'id': id},

@@ -35,6 +35,12 @@ def play():
 def finalResult():
     return render_template('final.html')
 
+@app.route('/scoreBoard')
+def scoreBoard():
+    dic = {}
+    for player in game.players:
+        dic[str(player.id)] = [player.name, player.score, player.id]
+    return jsonify(**dic)
 
 @app.route('/getPlayerName')
 def getCurrentName():
@@ -121,7 +127,7 @@ def submit_answer():
     
     return jsonify(**dic)
 
-@app.route('/updateGame', methods=['POST'])
+@app.route('/updateGame', methods=['GET'])
 def update_game():
     print(game.turn)
     if game.current == len(game.players)-1:
@@ -134,6 +140,7 @@ def update_game():
             return json.dumps(False)
     else:
         game.current += 1
+        return json.dumps(False)
 
 def sanitize(theString):
     print(theString)
