@@ -122,19 +122,15 @@ def submit_answer():
     else:
         dic['result'] = False
         game.players[game.current].score -= int(value)
-
-    update_game()
     
     return jsonify(**dic)
 
 @app.route('/updateGame', methods=['GET'])
 def update_game():
-    print(game.turn)
     if game.current == len(game.players)-1:
         game.current = 0
         game.turn += 1
-        if game.turn >= 2:
-            print('Virkadi')
+        if game.turn >= 5:
             return json.dumps(True)
         else:
             return json.dumps(False)
