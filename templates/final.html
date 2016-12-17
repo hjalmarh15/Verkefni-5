@@ -13,6 +13,7 @@
 		<div class="jumbotron">
     		<h1>GAME OVER</h1>
     		<table id="results" class="table"></table>
+    		<button id="playAgain" class="btn btn-primary">Play again!</button>
     	</div>
     </div>
     <script>
@@ -20,6 +21,10 @@
     		getFinal();
     	});
 
+
+    	$('#playAgain').click(function() {
+    		newGame()
+    	});
     	function getFinal() {
     		$.ajax({
     			url: '/scoreBoard',
@@ -33,15 +38,23 @@
 	        		}
 		        },
 		        error: function(error) {
-		        	alert('error')
+		        	console.log(error)
 		        }
     		});
     	};
 
 
-  		function newgame() {
+  		function newGame() {
   			$.ajax({
-  				url: '/newGa'
+  				url: '/playAgain',
+  				type: 'GET',
+  				success:function(response){
+  					console.log(response)
+  					window.location.replace('/newGame')
+  				},
+  				error: function(error){
+  					console.log(error)
+  				}
   			})
   		}
     </script>
