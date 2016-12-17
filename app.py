@@ -9,7 +9,6 @@ from klasar import Game, Player
 
 app = Flask(__name__)
 
-game = Game()
 
 
 @app.route('/')
@@ -19,6 +18,7 @@ def main():
 
 @app.route('/newGame')
 def newGame():
+    game = Game()
     return render_template('newGame.html')
 
 

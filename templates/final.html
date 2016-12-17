@@ -9,9 +9,12 @@
      <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
 </head>
 <body>
-    <h1>GAME OVER</h1>
-    <table id="results" class="table"></table>
-
+	<div class="container-fluid">
+		<div class="jumbotron">
+    		<h1>GAME OVER</h1>
+    		<table id="results" class="table"></table>
+    	</div>
+    </div>
     <script>
     	$(function(){
     		getFinal();
@@ -34,6 +37,13 @@
 		        }
     		});
     	};
+
+
+  		function newgame() {
+  			$.ajax({
+  				url: '/newGa'
+  			})
+  		}
     </script>
 </body>
 </html>
