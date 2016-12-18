@@ -10,7 +10,6 @@ app = Flask(__name__)
 
 game = Game()
 
-
 @app.route('/')
 def main():  # Render'ar main menu
     return render_template('mainMenu.html')
@@ -21,6 +20,19 @@ def new_game():  # Render'ar html til að búa til nýjan leik
     return render_template('newGame.html')
 
 
+<<<<<<< HEAD
+=======
+@app.route('/playAgain')
+def playAgain():
+    game = Game()
+    return json.dumps(True)
+
+@app.route('/highScores')
+def highScores():
+    return render_template('highScore.html')
+
+
+>>>>>>> a7cb32901e51a097bfd83d9476b32d224766dfd1
 @app.route('/game')
 def play():  # Render'ar leiknum
     return render_template('index.html')

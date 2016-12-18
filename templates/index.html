@@ -53,7 +53,6 @@
 			var id = $(this).val();
 			category(id);
 		});
-
 		function getCategories() {
 			$.ajax({
 		            url: '/getCategories',
@@ -163,7 +162,6 @@
 			dataType: 'json',
 				type: 'GET',	
 			success: function(response) {
-				console.log(response['clues'])
 				$('#answerBox').html('');
 				$('#answerBox').append('<p>' + category + '</p>')
 				for (i = 0; i < response['clues'].length;i++) {
@@ -179,7 +177,6 @@
 
 		});
 	};	
-
 	</script>
 </body>
 </html>
