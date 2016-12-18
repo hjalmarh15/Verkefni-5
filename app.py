@@ -20,19 +20,12 @@ def new_game():  # Render'ar html til að búa til nýjan leik
     return render_template('newGame.html')
 
 
-<<<<<<< HEAD
-=======
 @app.route('/playAgain')
-def playAgain():
+def playAgain():    # Byrjar nýjan leik með sömu stillingum
     game = Game()
     return json.dumps(True)
 
-@app.route('/highScores')
-def highScores():
-    return render_template('highScore.html')
 
-
->>>>>>> a7cb32901e51a097bfd83d9476b32d224766dfd1
 @app.route('/game')
 def play():  # Render'ar leiknum
     return render_template('index.html')
@@ -116,8 +109,8 @@ def get_player_names():     # Sækja nöfn leikmanna sem gefin voru af notanda
 
 
 @app.route('/submitAnswer', methods=['POST', 'GET'])
-def submit_answer():
-    dic = {}            # Taka á móti svari notanda og verify'a hvort það sé rétt
+def submit_answer():        # Taka á móti svari notanda og verify'a hvort það sé rétt
+    dic = {}
     dic['answer'] = request.args.get('answer')
     ID = request.args.get('id')
     qNa = get_question_and_answer(ID)
